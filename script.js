@@ -1,18 +1,7 @@
+// =====================
+// DEBUG
+// =====================
 alert("JS jalan");
-const video = document.getElementById("video");
-
-// 1. AKSES KAMERA
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(stream => {
-    video.srcObject = stream;
-  });
-
-// 2. SUARA
-function speak(text) {
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = "id-ID";
-  speechSynthesis.speak(speech);
-}
 
 // =====================
 // ELEMENT
@@ -27,6 +16,8 @@ const ctx = canvas.getContext("2d");
 navigator.mediaDevices.getUserMedia({ video: true })
   .then(stream => {
     video.srcObject = stream;
+    video.play();
+    console.log("kamera aktif");
   })
   .catch(err => {
     console.error("Kamera error:", err);
@@ -123,12 +114,10 @@ hands.onResults(results => {
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   if (results.multiHandLandmarks) {
-
     const hand = results.multiHandLandmarks[0];
     const gesture = detectGesture(hand);
 
     if (gesture) {
-
       const color = gestureColors[gesture] || "white";
 
       // background
